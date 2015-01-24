@@ -142,11 +142,12 @@ class Admin::ContentController < Admin::BaseController
   def new_or_edit
     id = params[:id]
     id = params[:article][:id] if params[:article] && params[:article][:id]
-    merge_id = params[:article][:merge_with] if params[:article] && params[:article][:merge_with]
+    merge_id = params[:merge_with] if params[:merge_with]
     if merge_id && Article.exists?(merge_id)
     	@article = Article.find(params[:id])
 			@second_article = Article.find(merge_id)
       @article.body = @article.body + @second_article.body
+      @article.comments <<  @second_article.comments
       @article.save
       redirect_to :action => 'index'
       return
