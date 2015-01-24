@@ -148,6 +148,7 @@
     </ul>
   </div>  
 
+<% if User.find(session[:user_id]).admin? %>
   <div class=''>
     <h4><%= _("Merge Articles") %></h4>
     <label><%= _("Article ID") %>
@@ -155,7 +156,7 @@
     </label>
     <%= button_to "Merge", action: "merge" %>
   </div>   
+<% end %>
   </div>
-
 </div>
 
