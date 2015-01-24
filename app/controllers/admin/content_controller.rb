@@ -23,11 +23,6 @@ class Admin::ContentController < Admin::BaseController
     end
   end
 
-	def merge	
-    redirect_to :action => 'index'
-    return
-	end
-
   def new
     new_or_edit
   end
@@ -147,6 +142,15 @@ class Admin::ContentController < Admin::BaseController
   def new_or_edit
     id = params[:id]
     id = params[:article][:id] if params[:article] && params[:article][:id]
+    merge_id = params[:article][:merge_with] if params[:article] && params[:article][:merge_with]
+    if merge_id && Article.exists?(merge_id)
+    	@article = Article.find(params[:id])
+			@second_article = Article.find(merge_id)
+      @article.body = @article.body + @second_article.body
+      @article.save
+      redirect_to :action => 'index'
+      return
+    end
     @article = Article.get_or_build_article(id)
     @article.text_filter = current_user.text_filter if current_user.simple_editor?
 
