@@ -149,6 +149,8 @@ class Admin::ContentController < Admin::BaseController
       @article.body = @article.body + @second_article.body
       @article.comments <<  @second_article.comments
       @article.save
+			@second_article = Article.find(merge_id)
+      @second_article.destroy
       redirect_to :action => 'index'
       return
     end
