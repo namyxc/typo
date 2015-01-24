@@ -23,6 +23,11 @@ class Admin::ContentController < Admin::BaseController
     end
   end
 
+	def merge	
+    redirect_to :action => 'index'
+    return
+	end
+
   def new
     new_or_edit
   end
