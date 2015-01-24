@@ -143,7 +143,7 @@ class Admin::ContentController < Admin::BaseController
     id = params[:id]
     id = params[:article][:id] if params[:article] && params[:article][:id]
     merge_id = params[:merge_with] if params[:merge_with]
-    if merge_id && Article.exists?(merge_id)
+    if merge_id && Article.exists?(merge_id) && User.find(session[:user_id]).admin?
     	@article = Article.find(params[:id])
 			@second_article = Article.find(merge_id)
       @article.body = @article.body + @second_article.body
